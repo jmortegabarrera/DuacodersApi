@@ -9,7 +9,10 @@ export class FindAllDuacoderUseCase {
 
   async execute(query: FindAllDuacoderDTO): Promise<Duacoder[]> {
     const { page, pageSize, skills,nif, name, department, position } = query;
-    const skip = (page - 1) * pageSize;
+    if(page && pageSize) {
+      const skip = (page - 1) * pageSize;
+    }
+    const skip = 0;
     const take = pageSize;
 
     const filter: any = {};
