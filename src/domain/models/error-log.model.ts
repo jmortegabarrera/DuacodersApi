@@ -1,5 +1,5 @@
 export class ErrorLog {
-  id: number;
+  id: string;
   message: string;
   stackTrace: object | null;
   type: string;

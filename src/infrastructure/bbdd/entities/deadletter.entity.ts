@@ -1,14 +1,14 @@
-import { Entity, PrimaryGeneratedColumn, Column } from 'typeorm';
-
+import { Column, Entity, PrimaryGeneratedColumn } from 'typeorm';
+import { v4 as uuidv4 } from 'uuid';
 @Entity()
 export class DeadLetterEntity {
-  @PrimaryGeneratedColumn()
-  id: number;
+  @PrimaryGeneratedColumn('uuid')
+  id: string = uuidv4();
 
   @Column()
   message: string;
 
-  @Column('json',{ nullable: true })
+  @Column('json', { nullable: true })
   stackTrace: object | null;
 
   @Column()

@@ -1,12 +1,18 @@
 import { Module } from '@nestjs/common';
+import { ConfigModule } from '@nestjs/config';
 import { TypeOrmModule } from '@nestjs/typeorm';
+import { DeadletterModule } from './application/services/deadletter/deadletter.module';
+import { AuthModule } from './application/use-cases/auth/auth.module';
 import { DuacoderModule } from './application/use-cases/duacoder/duacoder.module';
-import { DuacoderController } from './infrastructure/adapters/controllers/duacoder.controller';
 import { databaseConfig } from './infrastructure/config/database.config';
-import { DeadletterModule } from './infrastructure/http/deadletter.module';
 
 @Module({
-  imports: [TypeOrmModule.forRoot(databaseConfig), DuacoderModule, DeadletterModule],
-  controllers: [DuacoderController],
+  imports: [
+    TypeOrmModule.forRoot(databaseConfig),
+    DuacoderModule,
+    DeadletterModule,
+    AuthModule,
+    ConfigModule.forRoot({ isGlobal: true, envFilePath: '.env' }),
+  ],
 })
 export class AppModule {}

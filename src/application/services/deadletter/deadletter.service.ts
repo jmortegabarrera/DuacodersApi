@@ -3,7 +3,7 @@ import { ErrorLog } from '../../../domain/models/error-log.model';
 import { DeadletterLogRepositoryImpl } from '../../../infrastructure/bbdd/repositories/deadletter.repository';
 
 @Injectable()
-export class RegisterErrorLogUseCase {
+export class DeadLetterService {
   constructor(
     private readonly deadletterLogRepository: DeadletterLogRepositoryImpl,
   ) {}

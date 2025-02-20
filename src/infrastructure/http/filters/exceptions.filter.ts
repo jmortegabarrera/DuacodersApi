@@ -1,12 +1,10 @@
 import { ArgumentsHost, Catch, ExceptionFilter } from '@nestjs/common';
 import { Response } from 'express';
-import { RegisterErrorLogUseCase } from '../../../application/use-cases/deadletter/deadletter.usecase';
+import { DeadLetterService } from '../../../application/services/deadletter/deadletter.service';
 
 @Catch()
 export class AllExceptionsFilter implements ExceptionFilter {
-  constructor(
-    private readonly registerErrorLogUseCase: RegisterErrorLogUseCase,
-  ) {}
+  constructor(private readonly registerErrorLogUseCase: DeadLetterService) {}
 
   catch(exception: any, host: ArgumentsHost) {
     const context = host.switchToHttp();
