@@ -1,11 +1,12 @@
-import { Injectable } from '@nestjs/common';
+import { Inject, Injectable } from '@nestjs/common';
 import { ErrorLog } from '../../../domain/models/error-log.model';
-import { DeadletterLogRepositoryImpl } from '../../../infrastructure/bbdd/repositories/deadletter.repository';
+import { DeadletterLogRepository } from '../../../domain/repositories/deadletter.repository';
 
 @Injectable()
 export class DeadLetterService {
   constructor(
-    private readonly deadletterLogRepository: DeadletterLogRepositoryImpl,
+    @Inject('deadletterLogRepository')
+    private readonly deadletterLogRepository: DeadletterLogRepository,
   ) {}
 
   async execute(

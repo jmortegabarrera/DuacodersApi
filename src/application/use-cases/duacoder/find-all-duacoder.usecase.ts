@@ -1,15 +1,18 @@
-import { Injectable } from '@nestjs/common';
+import { Inject, Injectable } from '@nestjs/common';
 import { Duacoder } from '../../../domain/models/duacoder.model';
-import { DuacoderRepositoryImpl } from '../../../infrastructure/bbdd/repositories/duacoder.repository';
+import { DuacoderRepository } from '../../../domain/repositories/duacoder.repository';
 import { FindAllDuacoderDTO } from './dtos/findAll.duacoder.dto.ts';
 
 @Injectable()
 export class FindAllDuacoderUseCase {
-  constructor(private readonly duacoderRepository: DuacoderRepositoryImpl) {}
+  constructor(
+    @Inject('DuacoderRepository')
+    private readonly duacoderRepository: DuacoderRepository,
+  ) {}
 
   async execute(query: FindAllDuacoderDTO): Promise<Duacoder[]> {
-    const { page, pageSize, skills,nif, name, department, position } = query;
-    if(page && pageSize) {
+    const { page, pageSize, skills, nif, name, department, position } = query;
+    if (page && pageSize) {
       const skip = (page - 1) * pageSize;
     }
     const skip = 0;
@@ -23,5 +26,5 @@ export class FindAllDuacoderUseCase {
     if (position) filter.position = position;
 
     return this.duacoderRepository.findAll(filter, skip, take);
-    }
+  }
 }

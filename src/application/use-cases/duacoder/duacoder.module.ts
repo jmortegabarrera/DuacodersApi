@@ -18,15 +18,15 @@ import { UpdateDuacoderUseCase } from './update-duacoder.usecase';
     FindAllDuacoderUseCase,
     FindDuacoderUseCase,
     UpdateDuacoderUseCase,
-    DuacoderRepositoryImpl,
+    { provide: 'DuacoderRepository', useClass: DuacoderRepositoryImpl },
   ],
   exports: [
-    DuacoderRepositoryImpl,
     CreateDuacoderUseCase,
     DeleteDuacoderUseCase,
     FindAllDuacoderUseCase,
     FindDuacoderUseCase,
     UpdateDuacoderUseCase,
+    'DuacoderRepository',
   ],
 })
 export class DuacoderModule {}

@@ -5,7 +5,12 @@ import { DeadletterLogRepositoryImpl } from '../../../infrastructure/bbdd/reposi
 
 @Module({
   imports: [TypeOrmModule.forFeature([DeadLetterEntity])],
-  providers: [DeadletterLogRepositoryImpl],
-  exports: [DeadletterLogRepositoryImpl],
+  providers: [
+    {
+      provide: 'DeadletterLogRepository',
+      useClass: DeadletterLogRepositoryImpl,
+    },
+  ],
+  exports: ['DeadletterLogRepository'],
 })
 export class DeadletterModule {}

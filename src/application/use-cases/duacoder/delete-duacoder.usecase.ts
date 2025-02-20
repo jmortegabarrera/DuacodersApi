@@ -1,9 +1,12 @@
-import { Injectable } from '@nestjs/common';
-import { DuacoderRepositoryImpl } from '../../../infrastructure/bbdd/repositories/duacoder.repository';
+import { Inject, Injectable } from '@nestjs/common';
+import { DuacoderRepository } from '../../../domain/repositories/duacoder.repository';
 
 @Injectable()
 export class DeleteDuacoderUseCase {
-  constructor(private readonly duacoderRepository: DuacoderRepositoryImpl) {}
+  constructor(
+    @Inject('DuacoderRepository')
+    private readonly duacoderRepository: DuacoderRepository,
+  ) {}
 
   async execute(nifs: string[]): Promise<void> {
     await this.duacoderRepository.delete(nifs);

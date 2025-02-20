@@ -1,10 +1,13 @@
-import { Injectable } from '@nestjs/common';
+import { Inject, Injectable } from '@nestjs/common';
 import { Duacoder } from '../../../domain/models/duacoder.model';
-import { DuacoderRepositoryImpl } from '../../../infrastructure/bbdd/repositories/duacoder.repository';
+import { DuacoderRepository } from '../../../domain/repositories/duacoder.repository';
 
 @Injectable()
 export class UpdateDuacoderUseCase {
-  constructor(private readonly duacoderRepository: DuacoderRepositoryImpl) {}
+  constructor(
+    @Inject('DuacoderRepository')
+    private readonly duacoderRepository: DuacoderRepository,
+  ) {}
 
   async execute(
     nif: string,

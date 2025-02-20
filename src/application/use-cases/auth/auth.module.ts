@@ -22,6 +22,6 @@ import { AuthUseCase } from './auth.usecase';
     TypeOrmModule.forFeature([UserEntity]),
   ],
   controllers: [AuthController],
-  providers: [AuthUseCase, UserRepositoryImpl, JwtStrategy],
+  providers: [AuthUseCase, JwtStrategy, { provide: 'UserRepository', useClass: UserRepositoryImpl }],
 })
 export class AuthModule {}

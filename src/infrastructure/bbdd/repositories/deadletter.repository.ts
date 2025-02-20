@@ -3,9 +3,10 @@ import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
 import { ErrorLog } from '../../../domain/models/error-log.model';
 import { DeadLetterEntity } from '../entities/deadletter.entity';
+import { DeadletterLogRepository } from '../../../domain/repositories/deadletter.repository';
 
 @Injectable()
-export class DeadletterLogRepositoryImpl {
+export class DeadletterLogRepositoryImpl implements DeadletterLogRepository {
   constructor(
     @InjectRepository(DeadLetterEntity)
     private readonly errorLogRepository: Repository<DeadLetterEntity>,
