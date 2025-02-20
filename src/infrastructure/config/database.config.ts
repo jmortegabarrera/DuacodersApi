@@ -9,8 +9,8 @@ export const databaseConfig: TypeOrmModuleOptions = {
   port: parseInt(process.env.DB_PORT || '3306', 10),
   username: process.env.DB_USERNAME || 'root',
   password: process.env.DB_PASSWORD || 'password',
-  database: process.env.DB_NAME || 'duacoder_db',
+  database: process.env.DB_NAME || 'duacoder_db1',
   entities: [DuacoderEntity, DeadLetterEntity, UserEntity],
-  synchronize: true,
-  migrations: ['./src/infrastructure/bbdd/migrations/*.ts'],
+  synchronize: false,
+  migrations: ['./src/migrations/migration/*.ts'],
 };
