@@ -1,6 +1,6 @@
 import { MigrationInterface, QueryRunner } from 'typeorm';
 
-export class Migration1740080177686 implements MigrationInterface {
+export class Migration1740080177687 implements MigrationInterface {
   public async up(queryRunner: QueryRunner): Promise<void> {
     await queryRunner.query(
       `CREATE TABLE \`users\` (\`id\` varchar(36) NOT NULL, \`username\` varchar(255) NOT NULL, \`password\` varchar(255) NOT NULL, UNIQUE INDEX \`IDX_fe0bb3f6520ee0469504521e71\` (\`username\`), PRIMARY KEY (\`id\`)) ENGINE=InnoDB`,
@@ -12,7 +12,7 @@ export class Migration1740080177686 implements MigrationInterface {
       `CREATE TABLE \`dead_letter_entity\` (\`id\` varchar(36) NOT NULL, \`message\` varchar(255) NOT NULL, \`stackTrace\` json NULL, \`type\` varchar(255) NOT NULL, \`createdAt\` datetime NOT NULL, PRIMARY KEY (\`id\`)) ENGINE=InnoDB`,
     );
     await queryRunner.query(
-      `INSERT INTO \`users\` VALUES ('root','$2b$10$ckaEj4bYmFya18AYUzVhzec59FzaTvboIKRTAfqCahBnvqtUZgSl2','a88dbaec-df19-4230-b869-a0b7b90c0472');`,
+      `INSERT INTO \`users\` VALUES ('a88dbaec-df19-4230-b869-a0b7b90c0472','root','$2b$10$ckaEj4bYmFya18AYUzVhzec59FzaTvboIKRTAfqCahBnvqtUZgSl2');`,
     );
     await queryRunner.query(`INSERT INTO \`duacoders\` (\`nif\`, \`name\`, \`biography\`,  \`department\`, \`position\`, \`skills\`, \`photoUrl\`,  \`likesOnionTortilla\`, \`birthDate\`) 
 VALUES 

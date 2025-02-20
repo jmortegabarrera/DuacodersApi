@@ -9,5 +9,5 @@ export const AppDataSource = new DataSource({
   database: process.env.DB_NAME || 'duacoder_db1',
   synchronize: false,
   entities: ['**/*.entity.ts'],
-  migrations: ['./src/migrations/migration/*.ts'],
+  migrations: ['src/migrations/*.ts'],
 });
