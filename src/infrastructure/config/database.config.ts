@@ -1,5 +1,6 @@
 import { TypeOrmModuleOptions } from '@nestjs/typeorm';
 import { DuacoderEntity } from '../bbdd/entities/duacoder.entity';
+import { DeadLetterEntity } from '../bbdd/entities/deadletter.entity';
 
 export const databaseConfig: TypeOrmModuleOptions = {
   type: (process.env.DB_TYPE as 'mysql') || 'mysql', 
@@ -8,7 +9,7 @@ export const databaseConfig: TypeOrmModuleOptions = {
   username: process.env.DB_USERNAME || 'root',
   password: process.env.DB_PASSWORD || 'password',
   database: process.env.DB_NAME || 'duacoder_db',
-  entities: [DuacoderEntity],
+  entities: [DuacoderEntity, DeadLetterEntity],
   synchronize: true,
   migrations: ['./src/infrastructure/bbdd/migrations/*.ts'],
 };
