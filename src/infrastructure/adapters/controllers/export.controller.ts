@@ -1,15 +1,19 @@
-import { Controller, Get, Query, Res } from '@nestjs/common';
+import { Controller, Get, Param, Query, Res } from '@nestjs/common';
 import { ApiOperation, ApiQuery, ApiResponse } from '@nestjs/swagger';
 import { Response } from 'express';
 import { FindAllDuacoderDTO } from '../../../application/use-cases/duacoder/dtos/findAll.duacoder.dto.ts';
 import { FindAllDuacoderUseCase } from '../../../application/use-cases/duacoder/find-all-duacoder.usecase.js';
 import { ExcelService } from '../services/excel.service.js';
+import { FindDuacoderUseCase } from '../../../application/use-cases/duacoder/find-duacoder.usecase.ts';
+import { PdfService } from '../services/pdf.service.js';
 
 @Controller('export')
 export class ExportController {
   constructor(
     private readonly findAllDuacoderUseCase: FindAllDuacoderUseCase,
     private readonly excelService: ExcelService,
+    private readonly findDuacoderUseCase: FindDuacoderUseCase,
+    private readonly pdfService: PdfService,
   ) {}
 
   @Get('xls')
@@ -65,6 +69,22 @@ export class ExportController {
   async exportXLS(@Res() res: Response, @Query() query: FindAllDuacoderDTO) {
     const duacodersToExport = await this.findAllDuacoderUseCase.execute(query);
 
-    await this.excelService.generateExcelFile(res, duacodersToExport);
+    this.excelService.generateExcelFile(res, duacodersToExport);
+  }
+
+  @Get(':nif/pdf')
+  @ApiOperation({ summary: 'Print pdf of one of the dualcoders' })
+  @ApiResponse({
+    status: 201,
+    description: 'The dualcoder is listed.',
+  })
+  @ApiResponse({
+    status: 400,
+    description: 'Bad request.',
+  })
+  async getDuacoderPdf(@Res() response: Response, @Param('nif') nif: string) {
+    const duacoder = await this.findDuacoderUseCase.execute(nif); 
+
+    await this.pdfService.generateDuacoderPdf(response, duacoder);
   }
 }
