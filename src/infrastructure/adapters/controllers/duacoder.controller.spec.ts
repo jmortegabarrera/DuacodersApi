@@ -6,6 +6,7 @@ import { UpdateDuacoderUseCase } from '../../../application/use-cases/duacoder/u
 import { DeleteDuacoderUseCase } from '../../../application/use-cases/duacoder/delete-duacoder.usecase';
 import { FindAllDuacoderUseCase } from '../../../application/use-cases/duacoder/find-all-duacoder.usecase';
 import { FindDuacoderUseCase } from '../../../application/use-cases/duacoder/find-duacoder.usecase.ts';
+import { FindAllDuacoderDTO } from '../../../application/use-cases/duacoder/dtos/findAll.duacoder.dto.ts';
 
 describe('DuacoderController', () => {
   let controller: DuacoderController;
@@ -54,7 +55,8 @@ describe('DuacoderController', () => {
   });
 
   it('should return all duacoders', async () => {
-    const result = await controller.findAll();
+    const mockFindAllDuacoderDTO = new FindAllDuacoderDTO();
+    const result = await controller.findAll(mockFindAllDuacoderDTO);
     expect(result).toEqual([{ nif: '123456789', name: 'John Doe' }]);
     expect(findAllUseCase.execute).toHaveBeenCalled();
   });
@@ -73,7 +75,8 @@ describe('DuacoderController', () => {
   });
 
   it('should delete a duacoder', async () => {
-    await controller.delete('123456789');
-    expect(deleteUseCase.execute).toHaveBeenCalledWith('123456789');
+    const mockDeleteDuacoderDTO = { nifs: ['123456789'] };
+    await controller.delete(mockDeleteDuacoderDTO);
+    expect(deleteUseCase.execute).toHaveBeenCalledWith(['123456789']);
   });
 });

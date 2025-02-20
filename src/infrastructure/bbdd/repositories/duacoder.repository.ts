@@ -1,9 +1,9 @@
 import { Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
-import { FindOptionsWhere, In, Like, Repository } from 'typeorm';
-import { DuacoderEntity } from 'src/infrastructure/bbdd/entities/duacoder.entity';
-import { DuacoderRepository } from 'src/domain/repositories/duacoder.repository';
-import { Duacoder } from 'src/domain/models/duacoder.model'; 
+import { Duacoder } from 'src/domain/models/duacoder.model';
+import { DuacoderRepository } from '../../../domain/repositories/duacoder.repository';
+import { DuacoderEntity } from '../../../infrastructure/bbdd/entities/duacoder.entity';
+import { FindOptionsWhere, Like, Repository } from 'typeorm';
 
 @Injectable()
 export class DuacoderRepositoryImpl implements DuacoderRepository {
@@ -27,9 +27,7 @@ export class DuacoderRepositoryImpl implements DuacoderRepository {
     return await this.duacoderRepository.save(duacoderEntity);
   }
 
-  async findAll(filter: any, skip: number, take: number): Promise<DuacoderEntity[]> {
-    console.log(filter);
-    
+  async findAll(filter: any, skip: number, take: number): Promise<DuacoderEntity[]> {    
     const where: FindOptionsWhere<DuacoderEntity> = {};
 
     if (filter.name) {

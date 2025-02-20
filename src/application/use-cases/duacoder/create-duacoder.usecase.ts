@@ -1,8 +1,7 @@
 import { Injectable } from '@nestjs/common';
-import { DuacoderRepository } from '../../../domain/repositories/duacoder.repository';
 import { DuacoderEntity } from '../../../infrastructure/bbdd/entities/duacoder.entity';
-import { CreateDuacoderDTO } from './dtos/create-duacoder.dto';
 import { DuacoderRepositoryImpl } from '../../../infrastructure/bbdd/repositories/duacoder.repository';
+import { CreateDuacoderDTO } from './dtos/create-duacoder.dto';
 
 @Injectable()
 export class CreateDuacoderUseCase {
