@@ -1,6 +1,5 @@
 import { Controller, Get, Query, Res } from '@nestjs/common';
 import { ApiOperation, ApiQuery, ApiResponse } from '@nestjs/swagger';
-import * as ExcelJS from 'exceljs';
 import { Response } from 'express';
 import { FindAllDuacoderDTO } from '../../../application/use-cases/duacoder/dtos/findAll.duacoder.dto.ts';
 import { FindAllDuacoderUseCase } from '../../../application/use-cases/duacoder/find-all-duacoder.usecase.js';
@@ -65,7 +64,6 @@ export class ExportController {
   })
   async exportXLS(@Res() res: Response, @Query() query: FindAllDuacoderDTO) {
     const duacodersToExport = await this.findAllDuacoderUseCase.execute(query);
-
 
     await this.excelService.generateExcelFile(res, duacodersToExport);
   }
