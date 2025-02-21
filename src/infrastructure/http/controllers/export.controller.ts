@@ -84,7 +84,9 @@ export class ExportController {
   })
   async getDuacoderPdf(@Res() response: Response, @Param('nif') nif: string) {
     const duacoder = await this.findDuacoderUseCase.execute(nif); 
-
+    if(!duacoder) {
+      response.status(404).send({ message: 'Duacoder not found' });
+    }
     await this.pdfService.generateDuacoderPdf(response, duacoder);
   }
 }
