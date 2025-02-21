@@ -1,6 +1,6 @@
 import { Inject, Injectable } from '@nestjs/common';
+import { Duacoder } from '../../../domain/models/duacoder.model';
 import { DuacoderRepository } from '../../../domain/repositories/duacoder.repository';
-import { DuacoderEntity } from '../../../infrastructure/bbdd/entities/duacoder.entity';
 import { CreateDuacoderDTO } from './dtos/create-duacoder.dto';
 
 @Injectable()
@@ -10,8 +10,8 @@ export class CreateDuacoderUseCase {
     private readonly duacoderRepository: DuacoderRepository,
   ) {}
 
-  async execute(createDuacoderDTO: CreateDuacoderDTO): Promise<DuacoderEntity> {
-    const duacoder = new DuacoderEntity();
+  async execute(createDuacoderDTO: CreateDuacoderDTO): Promise<Duacoder> {
+    const duacoder: Duacoder = {} as Duacoder;
     duacoder.nif = createDuacoderDTO.nif;
     duacoder.name = createDuacoderDTO.name;
     duacoder.biography = createDuacoderDTO.biography;

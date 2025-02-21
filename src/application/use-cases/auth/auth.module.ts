@@ -2,7 +2,7 @@ import { Module } from '@nestjs/common';
 import { ConfigModule, ConfigService } from '@nestjs/config';
 import { JwtModule } from '@nestjs/jwt';
 import { TypeOrmModule } from '@nestjs/typeorm';
-import { AuthController } from '../../../infrastructure/adapters/controllers/auth.controller';
+import { AuthController } from '../../../infrastructure/http/controllers/auth.controller';
 import { UserEntity } from '../../../infrastructure/bbdd/entities/user.entity';
 import { UserRepositoryImpl } from '../../../infrastructure/bbdd/repositories/user.repository';
 import { JwtStrategy } from '../../../infrastructure/security/jwt.strategy';

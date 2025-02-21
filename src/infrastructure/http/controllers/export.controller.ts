@@ -1,11 +1,11 @@
 import { Controller, Get, Param, Query, Res } from '@nestjs/common';
 import { ApiOperation, ApiQuery, ApiResponse } from '@nestjs/swagger';
 import { Response } from 'express';
-import { FindAllDuacoderDTO } from '../../../application/use-cases/duacoder/dtos/findAll.duacoder.dto.ts';
+import { FindAllDuacoderDTO } from '../../../application/use-cases/duacoder/dtos/findAll.duacoder.dto.js';
 import { FindAllDuacoderUseCase } from '../../../application/use-cases/duacoder/find-all-duacoder.usecase.js';
-import { ExcelService } from '../services/excel.service.js';
-import { FindDuacoderUseCase } from '../../../application/use-cases/duacoder/find-duacoder.usecase.ts';
-import { PdfService } from '../services/pdf.service.js';
+import { ExcelService } from '../../adapters/services/excel.service.js';
+import { FindDuacoderUseCase } from '../../../application/use-cases/duacoder/find-duacoder.usecase.js';
+import { PdfService } from '../../adapters/services/pdf.service.js';
 
 @Controller('export')
 export class ExportController {
@@ -84,7 +84,9 @@ export class ExportController {
   })
   async getDuacoderPdf(@Res() response: Response, @Param('nif') nif: string) {
     const duacoder = await this.findDuacoderUseCase.execute(nif); 
-
+    if(!duacoder) {
+      response.status(404).send({ message: 'Duacoder not found' });
+    }
     await this.pdfService.generateDuacoderPdf(response, duacoder);
   }
 }

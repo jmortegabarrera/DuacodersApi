@@ -1,7 +1,7 @@
 import { Test, TestingModule } from '@nestjs/testing';
 import { Duacoder } from '../../../domain/models/duacoder.model';
-import { FindDuacoderUseCase } from './find-duacoder.usecase.ts';
 import { DuacoderRepository } from '../../../domain/repositories/duacoder.repository';
+import { FindDuacoderUseCase } from './find-duacoder.usecase';
 
 describe('FindDuacoderUseCase', () => {
   let findDuacoderUseCase: FindDuacoderUseCase;
