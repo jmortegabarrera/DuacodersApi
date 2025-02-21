@@ -1,18 +1,18 @@
 import { Test, TestingModule } from '@nestjs/testing';
-import { DuacoderRepositoryImpl } from '../../../infrastructure/bbdd/repositories/duacoder.repository';
 import { Duacoder } from '../../../domain/models/duacoder.model';
 import { FindDuacoderUseCase } from './find-duacoder.usecase.ts';
+import { DuacoderRepository } from '../../../domain/repositories/duacoder.repository';
 
 describe('FindDuacoderUseCase', () => {
   let findDuacoderUseCase: FindDuacoderUseCase;
-  let duacoderRepository: DuacoderRepositoryImpl;
+  let duacoderRepository: DuacoderRepository;
 
   beforeEach(async () => {
     const module: TestingModule = await Test.createTestingModule({
       providers: [
         FindDuacoderUseCase,
         {
-          provide: DuacoderRepositoryImpl,
+          provide: 'DuacoderRepository',
           useValue: {
             findById: jest.fn(),
           },
@@ -21,7 +21,7 @@ describe('FindDuacoderUseCase', () => {
     }).compile();
 
     findDuacoderUseCase = module.get<FindDuacoderUseCase>(FindDuacoderUseCase);
-    duacoderRepository = module.get<DuacoderRepositoryImpl>(DuacoderRepositoryImpl);
+    duacoderRepository = module.get<DuacoderRepository>('DuacoderRepository');
   });
 
   it('should be defined', () => {

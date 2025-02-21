@@ -1,28 +1,30 @@
 import { Test, TestingModule } from '@nestjs/testing';
-import { CreateDuacoderUseCase } from './create-duacoder.usecase';
-import { DuacoderRepositoryImpl } from '../../../infrastructure/bbdd/repositories/duacoder.repository';
-import { CreateDuacoderDTO } from './dtos/create-duacoder.dto';
+import { DuacoderRepository } from '../../../domain/repositories/duacoder.repository';
 import { DuacoderEntity } from '../../../infrastructure/bbdd/entities/duacoder.entity';
+import { CreateDuacoderUseCase } from './create-duacoder.usecase';
+import { CreateDuacoderDTO } from './dtos/create-duacoder.dto';
 
 describe('CreateDuacoderUseCase', () => {
   let createDuacoderUseCase: CreateDuacoderUseCase;
-  let duacoderRepository: DuacoderRepositoryImpl;
+  let duacoderRepository: DuacoderRepository;
 
   beforeEach(async () => {
     const module: TestingModule = await Test.createTestingModule({
       providers: [
         CreateDuacoderUseCase,
         {
-          provide: DuacoderRepositoryImpl,
+          provide: 'DuacoderRepository',
           useValue: {
-            create: jest.fn(), 
+            create: jest.fn(),
           },
         },
       ],
     }).compile();
 
-    createDuacoderUseCase = module.get<CreateDuacoderUseCase>(CreateDuacoderUseCase);
-    duacoderRepository = module.get<DuacoderRepositoryImpl>(DuacoderRepositoryImpl);
+    createDuacoderUseCase = module.get<CreateDuacoderUseCase>(
+      CreateDuacoderUseCase,
+    );
+    duacoderRepository = module.get<DuacoderRepository>('DuacoderRepository');
   });
 
   it('should be defined', () => {
@@ -43,14 +45,16 @@ describe('CreateDuacoderUseCase', () => {
     };
 
     const duacoderEntity: DuacoderEntity = {
-      ...createDuacoderDTO
+      ...createDuacoderDTO,
     };
 
     duacoderRepository.create = jest.fn().mockResolvedValue(duacoderEntity);
 
     const result = await createDuacoderUseCase.execute(createDuacoderDTO);
 
-    expect(duacoderRepository.create).toHaveBeenCalledWith(expect.objectContaining(createDuacoderDTO));
+    expect(duacoderRepository.create).toHaveBeenCalledWith(
+      expect.objectContaining(createDuacoderDTO),
+    );
     expect(result).toEqual(duacoderEntity);
   });
 });

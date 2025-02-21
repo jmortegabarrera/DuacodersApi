@@ -1,26 +1,28 @@
 import { Test, TestingModule } from '@nestjs/testing';
+import { DuacoderRepository } from '../../../domain/repositories/duacoder.repository';
 import { DeleteDuacoderUseCase } from './delete-duacoder.usecase';
-import { DuacoderRepositoryImpl } from '../../../infrastructure/bbdd/repositories/duacoder.repository';
 
 describe('DeleteDuacoderUseCase', () => {
   let deleteDuacoderUseCase: DeleteDuacoderUseCase;
-  let duacoderRepository: DuacoderRepositoryImpl;
+  let duacoderRepository: DuacoderRepository;
 
   beforeEach(async () => {
     const module: TestingModule = await Test.createTestingModule({
       providers: [
         DeleteDuacoderUseCase,
         {
-          provide: DuacoderRepositoryImpl,
+          provide: 'DuacoderRepository',
           useValue: {
-            delete: jest.fn(),  
+            delete: jest.fn(),
           },
         },
       ],
     }).compile();
 
-    deleteDuacoderUseCase = module.get<DeleteDuacoderUseCase>(DeleteDuacoderUseCase);
-    duacoderRepository = module.get<DuacoderRepositoryImpl>(DuacoderRepositoryImpl);
+    deleteDuacoderUseCase = module.get<DeleteDuacoderUseCase>(
+      DeleteDuacoderUseCase,
+    );
+    duacoderRepository = module.get<DuacoderRepository>('DuacoderRepository');
   });
 
   it('should be defined', () => {

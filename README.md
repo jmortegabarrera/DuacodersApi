@@ -145,7 +145,7 @@ duacoders-api
 ## 🧪 Testing
 
 Funcionalidad en desarrollo... 🧬
-
+`(Algunos test estan disponibles como ejemplo)`
 ---
 
 ## 🎯 Contacto

@@ -1,19 +1,19 @@
 import { Test, TestingModule } from '@nestjs/testing';
-import { FindAllDuacoderUseCase } from './find-all-duacoder.usecase';
-import { DuacoderRepositoryImpl } from '../../../infrastructure/bbdd/repositories/duacoder.repository';
-import { FindAllDuacoderDTO } from './dtos/findAll.duacoder.dto.ts';
 import { Duacoder } from '../../../domain/models/duacoder.model';
+import { DuacoderRepository } from '../../../domain/repositories/duacoder.repository';
+import { FindAllDuacoderDTO } from './dtos/findAll.duacoder.dto.ts';
+import { FindAllDuacoderUseCase } from './find-all-duacoder.usecase';
 
 describe('FindAllDuacoderUseCase', () => {
   let findAllDuacoderUseCase: FindAllDuacoderUseCase;
-  let duacoderRepository: DuacoderRepositoryImpl;
+  let duacoderRepository: DuacoderRepository;
 
   beforeEach(async () => {
     const module: TestingModule = await Test.createTestingModule({
       providers: [
         FindAllDuacoderUseCase,
         {
-          provide: DuacoderRepositoryImpl,
+          provide: 'DuacoderRepository',
           useValue: {
             findAll: jest.fn(),
           },
@@ -21,8 +21,10 @@ describe('FindAllDuacoderUseCase', () => {
       ],
     }).compile();
 
-    findAllDuacoderUseCase = module.get<FindAllDuacoderUseCase>(FindAllDuacoderUseCase);
-    duacoderRepository = module.get<DuacoderRepositoryImpl>(DuacoderRepositoryImpl);
+    findAllDuacoderUseCase = module.get<FindAllDuacoderUseCase>(
+      FindAllDuacoderUseCase,
+    );
+    duacoderRepository = module.get<DuacoderRepository>('DuacoderRepository');
   });
 
   it('should be defined', () => {
@@ -67,7 +69,7 @@ describe('FindAllDuacoderUseCase', () => {
         position: 'Developer',
       }),
       0,
-      10
+      10,
     );
     expect(result).toEqual(duacoderList);
   });
@@ -96,7 +98,7 @@ describe('FindAllDuacoderUseCase', () => {
         position: 'Manager',
       }),
       0,
-      10
+      10,
     );
     expect(result).toEqual([]);
   });
@@ -112,9 +114,13 @@ describe('FindAllDuacoderUseCase', () => {
       position: 'Developer',
     };
 
-    duacoderRepository.findAll = jest.fn().mockRejectedValue(new Error('Database error'));
+    duacoderRepository.findAll = jest
+      .fn()
+      .mockRejectedValue(new Error('Database error'));
 
-    await expect(findAllDuacoderUseCase.execute(query)).rejects.toThrow('Database error');
+    await expect(findAllDuacoderUseCase.execute(query)).rejects.toThrow(
+      'Database error',
+    );
   });
 
   it('should return empty array if no filters are provided', async () => {

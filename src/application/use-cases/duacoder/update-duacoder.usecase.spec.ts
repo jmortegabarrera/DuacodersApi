@@ -1,18 +1,18 @@
 import { Test, TestingModule } from '@nestjs/testing';
-import { UpdateDuacoderUseCase } from './update-duacoder.usecase';
-import { DuacoderRepositoryImpl } from '../../../infrastructure/bbdd/repositories/duacoder.repository';
 import { Duacoder } from '../../../domain/models/duacoder.model';
+import { DuacoderRepository } from '../../../domain/repositories/duacoder.repository';
+import { UpdateDuacoderUseCase } from './update-duacoder.usecase';
 
 describe('UpdateDuacoderUseCase', () => {
   let updateDuacoderUseCase: UpdateDuacoderUseCase;
-  let duacoderRepository: DuacoderRepositoryImpl;
+  let duacoderRepository: DuacoderRepository;
 
   beforeEach(async () => {
     const module: TestingModule = await Test.createTestingModule({
       providers: [
         UpdateDuacoderUseCase,
         {
-          provide: DuacoderRepositoryImpl,
+          provide: 'DuacoderRepository',
           useValue: {
             findById: jest.fn(),
             update: jest.fn(),
@@ -21,8 +21,10 @@ describe('UpdateDuacoderUseCase', () => {
       ],
     }).compile();
 
-    updateDuacoderUseCase = module.get<UpdateDuacoderUseCase>(UpdateDuacoderUseCase);
-    duacoderRepository = module.get<DuacoderRepositoryImpl>(DuacoderRepositoryImpl);
+    updateDuacoderUseCase = module.get<UpdateDuacoderUseCase>(
+      UpdateDuacoderUseCase,
+    );
+    duacoderRepository = module.get<DuacoderRepository>('DuacoderRepository');
   });
 
   it('should be defined', () => {
@@ -53,7 +55,10 @@ describe('UpdateDuacoderUseCase', () => {
     const result = await updateDuacoderUseCase.execute(nif, duacoderData);
 
     expect(duacoderRepository.findById).toHaveBeenCalledWith(nif);
-    expect(duacoderRepository.update).toHaveBeenCalledWith(nif, updatedDuacoder);
+    expect(duacoderRepository.update).toHaveBeenCalledWith(
+      nif,
+      updatedDuacoder,
+    );
     expect(result).toEqual(updatedDuacoder);
   });
 
@@ -86,8 +91,12 @@ describe('UpdateDuacoderUseCase', () => {
     };
 
     duacoderRepository.findById = jest.fn().mockResolvedValue(existingDuacoder);
-    duacoderRepository.update = jest.fn().mockRejectedValue(new Error('Database error'));
+    duacoderRepository.update = jest
+      .fn()
+      .mockRejectedValue(new Error('Database error'));
 
-    await expect(updateDuacoderUseCase.execute(nif, duacoderData)).rejects.toThrow('Database error');
+    await expect(
+      updateDuacoderUseCase.execute(nif, duacoderData),
+    ).rejects.toThrow('Database error');
   });
 });
