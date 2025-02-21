@@ -7,7 +7,7 @@ import {
   Post,
   Put,
   Query,
-  UseGuards
+  UseGuards,
 } from '@nestjs/common';
 import { AuthGuard } from '@nestjs/passport';
 import {
@@ -22,9 +22,9 @@ import { DeleteDuacoderUseCase } from '../../../application/use-cases/duacoder/d
 import { CreateDuacoderDTO } from '../../../application/use-cases/duacoder/dtos/create-duacoder.dto';
 import { DeleteDuacoderDTO } from '../../../application/use-cases/duacoder/dtos/delete-duacoder.dto';
 import { DuacoderDTO } from '../../../application/use-cases/duacoder/dtos/duacoder.dto.ts';
-import { FindAllDuacoderDTO } from '../../../application/use-cases/duacoder/dtos/findAll.duacoder.dto.ts';
+import { FindAllDuacoderDTO } from '../../../application/use-cases/duacoder/dtos/findAll.duacoder.dto';
 import { FindAllDuacoderUseCase } from '../../../application/use-cases/duacoder/find-all-duacoder.usecase';
-import { FindDuacoderUseCase } from '../../../application/use-cases/duacoder/find-duacoder.usecase.ts';
+import { FindDuacoderUseCase } from '../../../application/use-cases/duacoder/find-duacoder.usecase';
 import { UpdateDuacoderUseCase } from '../../../application/use-cases/duacoder/update-duacoder.usecase';
 
 @ApiTags('duacoders')

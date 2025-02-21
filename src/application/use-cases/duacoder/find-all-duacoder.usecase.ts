@@ -1,7 +1,7 @@
 import { Inject, Injectable } from '@nestjs/common';
 import { Duacoder } from '../../../domain/models/duacoder.model';
 import { DuacoderRepository } from '../../../domain/repositories/duacoder.repository';
-import { FindAllDuacoderDTO } from './dtos/findAll.duacoder.dto.ts';
+import { FindAllDuacoderDTO } from './dtos/findAll.duacoder.dto';
 
 @Injectable()
 export class FindAllDuacoderUseCase {

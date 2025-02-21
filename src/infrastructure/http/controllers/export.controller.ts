@@ -1,11 +1,11 @@
 import { Controller, Get, Param, Query, Res } from '@nestjs/common';
 import { ApiOperation, ApiQuery, ApiResponse } from '@nestjs/swagger';
 import { Response } from 'express';
-import { FindAllDuacoderDTO } from '../../../application/use-cases/duacoder/dtos/findAll.duacoder.dto.ts';
+import { FindAllDuacoderDTO } from '../../../application/use-cases/duacoder/dtos/findAll.duacoder.dto.js';
 import { FindAllDuacoderUseCase } from '../../../application/use-cases/duacoder/find-all-duacoder.usecase.js';
-import { ExcelService } from '../services/excel.service.js';
-import { FindDuacoderUseCase } from '../../../application/use-cases/duacoder/find-duacoder.usecase.ts';
-import { PdfService } from '../services/pdf.service.js';
+import { ExcelService } from '../../adapters/services/excel.service.js';
+import { FindDuacoderUseCase } from '../../../application/use-cases/duacoder/find-duacoder.usecase.js';
+import { PdfService } from '../../adapters/services/pdf.service.js';
 
 @Controller('export')
 export class ExportController {

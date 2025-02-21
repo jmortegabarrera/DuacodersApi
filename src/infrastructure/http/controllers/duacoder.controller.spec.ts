@@ -1,12 +1,12 @@
 import { Test, TestingModule } from '@nestjs/testing';
-import { DuacoderController } from './duacoder.controller';
-import { CreateDuacoderDTO } from '../../../application/use-cases/duacoder/dtos/create-duacoder.dto';
 import { CreateDuacoderUseCase } from '../../../application/use-cases/duacoder/create-duacoder.usecase';
-import { UpdateDuacoderUseCase } from '../../../application/use-cases/duacoder/update-duacoder.usecase';
 import { DeleteDuacoderUseCase } from '../../../application/use-cases/duacoder/delete-duacoder.usecase';
+import { CreateDuacoderDTO } from '../../../application/use-cases/duacoder/dtos/create-duacoder.dto';
+import { FindAllDuacoderDTO } from '../../../application/use-cases/duacoder/dtos/findAll.duacoder.dto';
 import { FindAllDuacoderUseCase } from '../../../application/use-cases/duacoder/find-all-duacoder.usecase';
-import { FindDuacoderUseCase } from '../../../application/use-cases/duacoder/find-duacoder.usecase.ts';
-import { FindAllDuacoderDTO } from '../../../application/use-cases/duacoder/dtos/findAll.duacoder.dto.ts';
+import { FindDuacoderUseCase } from '../../../application/use-cases/duacoder/find-duacoder.usecase';
+import { UpdateDuacoderUseCase } from '../../../application/use-cases/duacoder/update-duacoder.usecase';
+import { DuacoderController } from './duacoder.controller';
 
 describe('DuacoderController', () => {
   let controller: DuacoderController;
@@ -17,11 +17,29 @@ describe('DuacoderController', () => {
   let deleteUseCase: DeleteDuacoderUseCase;
 
   beforeEach(async () => {
-    const mockCreateUseCase = { execute: jest.fn().mockResolvedValue({ nif: '123456789', name: 'John Doe' }) };
-    const mockFindAllUseCase = { execute: jest.fn().mockResolvedValue([{ nif: '123456789', name: 'John Doe' }]) };
-    const mockFindOneUseCase = { execute: jest.fn().mockResolvedValue({ nif: '123456789', name: 'John Doe' }) };
-    const mockUpdateUseCase = { execute: jest.fn().mockResolvedValue({ nif: '123456789', name: 'Jane Doe' }) };
-    const mockDeleteUseCase = { execute: jest.fn().mockResolvedValue(undefined) };
+    const mockCreateUseCase = {
+      execute: jest
+        .fn()
+        .mockResolvedValue({ nif: '123456789', name: 'John Doe' }),
+    };
+    const mockFindAllUseCase = {
+      execute: jest
+        .fn()
+        .mockResolvedValue([{ nif: '123456789', name: 'John Doe' }]),
+    };
+    const mockFindOneUseCase = {
+      execute: jest
+        .fn()
+        .mockResolvedValue({ nif: '123456789', name: 'John Doe' }),
+    };
+    const mockUpdateUseCase = {
+      execute: jest
+        .fn()
+        .mockResolvedValue({ nif: '123456789', name: 'Jane Doe' }),
+    };
+    const mockDeleteUseCase = {
+      execute: jest.fn().mockResolvedValue(undefined),
+    };
 
     const module: TestingModule = await Test.createTestingModule({
       controllers: [DuacoderController],
@@ -47,7 +65,14 @@ describe('DuacoderController', () => {
   });
 
   it('should create a duacoder', async () => {
-    const dto: CreateDuacoderDTO = { nif: '123456789', name: 'Jane Doe', department: 'IT', position: 'Developer', likesOnionTortilla: true, skills: ['TypeScript', 'Angular'] };
+    const dto: CreateDuacoderDTO = {
+      nif: '123456789',
+      name: 'Jane Doe',
+      department: 'IT',
+      position: 'Developer',
+      likesOnionTortilla: true,
+      skills: ['TypeScript', 'Angular'],
+    };
     const result = await controller.create(dto);
     expect(result).toHaveProperty('nif', '123456789');
     expect(result).toHaveProperty('name', 'John Doe');
@@ -68,7 +93,14 @@ describe('DuacoderController', () => {
   });
 
   it('should update a duacoder', async () => {
-    const dto = { nif: '123456789', name: 'Jane Doe', department: 'IT', position: 'Developer', likesOnionTortilla: true, skills: ['TypeScript', 'Angular'] };
+    const dto = {
+      nif: '123456789',
+      name: 'Jane Doe',
+      department: 'IT',
+      position: 'Developer',
+      likesOnionTortilla: true,
+      skills: ['TypeScript', 'Angular'],
+    };
     const result = await controller.update('123456789', dto);
     expect(result).toHaveProperty('name', 'Jane Doe');
     expect(updateUseCase.execute).toHaveBeenCalledWith('123456789', dto);

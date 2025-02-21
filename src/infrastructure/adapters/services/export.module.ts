@@ -1,10 +1,10 @@
 import { Module } from '@nestjs/common';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { FindAllDuacoderUseCase } from '../../../application/use-cases/duacoder/find-all-duacoder.usecase';
-import { FindDuacoderUseCase } from '../../../application/use-cases/duacoder/find-duacoder.usecase.ts';
+import { FindDuacoderUseCase } from '../../../application/use-cases/duacoder/find-duacoder.usecase';
 import { DuacoderEntity } from '../../bbdd/entities/duacoder.entity';
 import { DuacoderRepositoryImpl } from '../../bbdd/repositories/duacoder.repository';
-import { ExportController } from '../controllers/export.controller';
+import { ExportController } from '../../http/controllers/export.controller';
 import { ExcelService } from './excel.service';
 import { PdfService } from './pdf.service';
 

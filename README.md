@@ -57,7 +57,7 @@ Esto levantará:
 | **Puerto**| 3306      |
 | **Usuario**| root     |
 | **Contraseña**| password |
-| **BBDD**  | duacoder_db1 |
+| **BBDD**  | duacoder_db |
 
 #### 🔐 Usuario API
 `{
