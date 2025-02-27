@@ -33,12 +33,14 @@ services:
       DB_USER: root
       DB_PASSWORD: password
       DB_NAME: duacoder_db
+      PUPPETEER_SKIP_CHROMIUM_DOWNLOAD: "true"
+
     depends_on:
       db:
         condition: service_healthy
     networks:
       - duacoder-network
-    command: sh -c "npm install && npm run migration:run && npm run start:dev"
+    command: sh -c "apt-get update && apt-get install -y wget curl && wget -qO- https://dl.google.com/linux/direct/google-chrome-stable_current_amd64.deb > /tmp/chrome.deb && apt-get install -y /tmp/chrome.deb && rm /tmp/chrome.deb && npm install && npm run migration:run && npm run start:dev"
     ports:
       - "3000:3000"
 
