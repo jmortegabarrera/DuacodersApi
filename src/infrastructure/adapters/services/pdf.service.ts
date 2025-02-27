@@ -1,6 +1,6 @@
 import { Injectable } from '@nestjs/common';
 import { Response } from 'express';
-import puppeteer from 'puppeteer';
+import puppeteer from 'puppeteer-core';
 
 @Injectable()
 export class PdfService {
@@ -32,8 +32,11 @@ export class PdfService {
       </html>
     `;
 
-    const browser = await puppeteer.launch();
-    const page = await browser.newPage();
+    const browser = await puppeteer.launch({
+      executablePath: process.env.CHROME_PATH || '/usr/bin/google-chrome-stable',
+      args: ['--no-sandbox', '--disable-setuid-sandbox'],
+    });
+        const page = await browser.newPage();
 
     await page.setContent(htmlContent);
 
